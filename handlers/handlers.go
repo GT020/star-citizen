@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"star-citizen/models"
 	"star-citizen/repositories"
 	"star-citizen/utils"
@@ -86,4 +87,17 @@ func (h *PlanetHandler) UpdatePlanet(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "result": updated})
+}
+
+func (h *PlanetHandler) DeletePlanet(c *fiber.Ctx) error {
+
+	id := c.Params("id")
+
+	err := h.repo.DeletePlanet(id)
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "failure", "result": err.Error()})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "result": fmt.Sprintf("planet with id %v deleted", id)})
 }

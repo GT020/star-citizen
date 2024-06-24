@@ -16,4 +16,5 @@ func Setup(app *fiber.App) {
 	app.Post("/planets", planetHandler.AddPlanet)
 	app.Get("/planets/:id?", planetHandler.GetPlanets)
 	app.Put("/planets/:id", planetHandler.UpdatePlanet)
+	app.Delete("/planets/:id", planetHandler.DeletePlanet)
 }
