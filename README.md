@@ -1,35 +1,73 @@
-# star-citizen
+# Star Citizen
 
-Handlers
+## Handlers
 
-AddPlanet: POST /planets
+### AddPlanet
+adds a new planet
+- **Method:** `POST`
+- **Endpoint:** `/planets`
 
-GetPlanets: GET /planets/:id?
+### GetPlanets
+get all planets
 
-UpdatePlanet: PUT /planets/:id
+if id is provided one specific planet with id will be fetched
+else all planets will be fetched
+and following filters can be used in query parameters when
+fetching all planets
 
-DeletePlanet: DELETE /planets/:id
+minMass <br />
+maxMass <br />
+minRadius <br />
+maxRadius <br />
 
-GetFuelEstimate: GET /planets/:id/fuel
+- **Method:** `GET`
+- **Endpoint:** `/planets/:id?`
 
-Repositories
-Repositories actually store the data
-Planet Repository is a interface
-and InMemoryPlanetRepo is its implementation
+### UpdatePlanet
+details of of planet with :id will be updated
+- **Method:** `PUT`
+- **Endpoint:** `/planets/:id`
 
-Util
-ValidatePlanet: Validates planet data according to the requirements
-CalculateFuel: Estimates fuel required
+### DeletePlanet
+planet with :id will be deleted
+- **Method:** `DELETE`
+- **Endpoint:** `/planets/:id`
 
-Run
+### GetFuelEstimate
+fuel estimation for going to planet with id will be calculated
+- **Method:** `GET`
+- **Endpoint:** `/planets/:id/fuel`
+
+## Repositories
+
+Repositories handle data storage.
+
+- **Planet Repository:** Interface for managing planet data.
+- **InMemoryPlanetRepo:** Implementation using in-memory storage.
+
+## Utilities
+
+- **ValidatePlanet:** Validates planet data according to specified requirements.
+- **CalculateFuel:** Estimates fuel required for a planet.
+
+## Run
+
+To run the application:
+
+```bash
 go run main.go
+```
 
-Build the Docker image:
+### Build the Docker image:
 
 docker build -t star-citizen-app .
 
-Run the Docker container:
+### Run the Docker container: 
+```bash
 docker run -p 3000:3000 star-citizen-app
+```
 
-Testing
+### Testing
+```bash
 go test ./...
+```
