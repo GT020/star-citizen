@@ -47,7 +47,19 @@ func (h *PlanetHandler) GetPlanets(c *fiber.Ctx) error {
 
 	if id == "" {
 
-		planets, err := h.repo.ListPlanets()
+		minMass, _ := strconv.ParseFloat(c.Query("min_mass"), 64)
+		maxMass, _ := strconv.ParseFloat(c.Query("max_mass"), 64)
+		minRadius, _ := strconv.ParseFloat(c.Query("min_radius"), 64)
+		maxRadius, _ := strconv.ParseFloat(c.Query("max_radius"), 64)
+
+		filter := models.PlanetFilter{
+			MinMass:   minMass,
+			MaxMass:   maxMass,
+			MinRadius: minRadius,
+			MaxRadius: maxRadius,
+		}
+
+		planets, err := h.repo.ListPlanets(filter)
 
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "failure", "result": err.Error()})

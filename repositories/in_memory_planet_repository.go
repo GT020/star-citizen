@@ -31,12 +31,17 @@ func (r *InMemoryPlanetRepository) AddPlanet(Planet models.Planet) (models.Plane
 
 	return Planet, nil
 }
-func (r *InMemoryPlanetRepository) ListPlanets() ([]models.Planet, error) {
+func (r *InMemoryPlanetRepository) ListPlanets(filter models.PlanetFilter) ([]models.Planet, error) {
 
 	res := make([]models.Planet, 0, len(r.planets))
 
 	for _, planet := range r.planets {
-		res = append(res, planet)
+		if (filter.MinMass == 0 || planet.Mass >= filter.MinMass) &&
+			(filter.MaxMass == 0 || planet.Mass <= filter.MaxMass) &&
+			(filter.MinRadius == 0 || planet.Radius >= filter.MinRadius) &&
+			(filter.MaxRadius == 0 || planet.Radius <= filter.MaxRadius) {
+			res = append(res, planet)
+		}
 	}
 
 	return res, nil
