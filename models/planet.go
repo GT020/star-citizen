@@ -10,7 +10,7 @@ type Planet struct {
 	Type        PlanetType `json:"type"`
 }
 
-func (p *Planet) getGravity() float64 {
+func (p *Planet) GetGravity() float64 {
 
 	switch p.Type {
 	case GasGiant:

@@ -5,6 +5,7 @@ import (
 	"star-citizen/models"
 	"star-citizen/repositories"
 	"star-citizen/utils"
+	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -100,4 +101,29 @@ func (h *PlanetHandler) DeletePlanet(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "result": fmt.Sprintf("planet with id %v deleted", id)})
+}
+
+func (h *PlanetHandler) GetFuelEstimate(c *fiber.Ctx) error {
+
+	id := c.Params("id")
+
+	planet, err := h.repo.GetPlanet(id)
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "failure", "result": err.Error()})
+	}
+
+	crewCapacity, err := strconv.Atoi(c.Query("crew"))
+
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "failure", "result": "Cannot parse crew size"})
+	}
+
+	if crewCapacity <= 0 {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "failure", "result": "Crew size must be greater than 0"})
+	}
+
+	estimate := utils.CalculateFuel(planet, crewCapacity)
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "result": estimate})
 }

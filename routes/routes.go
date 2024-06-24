@@ -17,4 +17,5 @@ func Setup(app *fiber.App) {
 	app.Get("/planets/:id?", planetHandler.GetPlanets)
 	app.Put("/planets/:id", planetHandler.UpdatePlanet)
 	app.Delete("/planets/:id", planetHandler.DeletePlanet)
+	app.Get("/planets/:id/fuel", planetHandler.GetFuelEstimate)
 }
