@@ -61,6 +61,7 @@ func (r *InMemoryPlanetRepository) UpdatePlanet(id string, Planet models.Planet)
 		return models.Planet{}, fmt.Errorf("planet with id %v does not exists", id)
 	}
 
+	Planet.ID = id
 	r.planets[id] = Planet
 
 	return Planet, nil
