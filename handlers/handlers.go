@@ -62,3 +62,28 @@ func (h *PlanetHandler) GetPlanets(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "result": planet})
 }
+
+func (h *PlanetHandler) UpdatePlanet(c *fiber.Ctx) error {
+
+	// TODO: implement partial updates
+
+	id := c.Params("id")
+
+	var planet models.Planet
+
+	if err := c.BodyParser(&planet); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "failure", "result": "Cannot parse JSON"})
+	}
+
+	if err := utils.ValidatePlanet(planet); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "failure", "result": err.Error()})
+	}
+
+	updated, err := h.repo.UpdatePlanet(id, planet)
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "failure", "result": err.Error()})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "result": updated})
+}
