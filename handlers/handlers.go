@@ -38,3 +38,27 @@ func (h *PlanetHandler) AddPlanet(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "result": hero})
 }
+
+func (h *PlanetHandler) GetPlanets(c *fiber.Ctx) error {
+
+	id := c.Params("id")
+
+	if id == "" {
+
+		planets, err := h.repo.ListPlanets()
+
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "failure", "result": err.Error()})
+		}
+
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "result": planets})
+	}
+
+	planet, err := h.repo.GetPlanet(id)
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "failure", "result": err.Error()})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "result": planet})
+}

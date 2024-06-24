@@ -14,4 +14,5 @@ func Setup(app *fiber.App) {
 	planetHandler := handlers.NewPlanetHandler(repo)
 
 	app.Post("/planets", planetHandler.AddPlanet)
+	app.Get("/planets/:id?", planetHandler.GetPlanets)
 }
