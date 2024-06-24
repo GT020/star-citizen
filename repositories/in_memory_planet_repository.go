@@ -35,11 +35,8 @@ func (r *InMemoryPlanetRepository) ListPlanets() ([]models.Planet, error) {
 
 	res := make([]models.Planet, 0, len(r.planets))
 
-	count := 0
-
 	for _, planet := range r.planets {
-		res[count] = planet
-		count++
+		res = append(res, planet)
 	}
 
 	return res, nil
