@@ -13,7 +13,7 @@ type InMemoryPlanetRepository struct {
 func NewInMemoryPlanetRepository() *InMemoryPlanetRepository {
 	return &InMemoryPlanetRepository{
 		planets:   make(map[string]models.Planet),
-		currentID: 1,
+		currentID: 0,
 	}
 }
 
