@@ -14,5 +14,5 @@ func (pt PlanetType) IsValid() error {
 	case GasGiant, Terrestrial:
 		return nil
 	}
-	return errors.New("invalid planet type")
+	return errors.New("invalid planet type possible values are = gas-giant,terrestrial")
 }
