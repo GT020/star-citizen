@@ -60,7 +60,9 @@ go run main.go
 
 ### Build the Docker image:
 
+```bash
 docker build -t star-citizen-app .
+```
 
 ### Run the Docker container: 
 ```bash
